@@ -14,6 +14,7 @@ function App(){
      <Navcomponent />
       <Routes>
         <Route exact path='/' element={<Home />} />
+        <Route exact path='/post/:postid' element={<PostPage />} />
         <Route exact path='/Store' element={<Store />} />
         <Route exact path='/dashboard' element={<Dashboard />} />
       </Routes>

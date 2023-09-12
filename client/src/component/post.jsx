@@ -1,12 +1,13 @@
 import React,{useEffect ,useState , useRef} from 'react';
 import { useParams , Link } from 'react-router-dom';
-import dp from "../img/image 1.jpg"
 import axios from 'axios';
+import oproductimg from "../img/productjeans1.jpg"
+
 import LoadingComponent from './Loading';
 import Errormsg from './errorcomponent';
 function PostPage () {
     const [data , setdata] = useState([])
-const  {postId}  = useParams();
+const  postId  = useParams().postid;
         const [relatedPost , setRelatedPost]= useState([])
         const [isLoading , setIsLoading] = useState(true)
         const [isRelatedPostLoading , setIsRelatedPostLoading] = useState(true)
@@ -15,8 +16,10 @@ const  {postId}  = useParams();
 
 useEffect(()=>{
   setIsLoading(true)
+  console.log(postId
+    )
 
-  axios.get(`http://localhost:5000/post/${postId}`)
+  axios.get(`http://localhost:2344/post/${postId}`)
            
   .then((res)=>{
       setdata(res.data)
@@ -40,7 +43,7 @@ useEffect(()=>{
 },[postId])
 useEffect(()=>{
   setInterval(() => {
-    axios.get(`http://localhost:5000/posts`)
+    axios.get(`http://localhost:2344/posts`)
            
   .then((res)=>{
 
@@ -80,7 +83,7 @@ const slicedRelatedPosts = filterpost.slice(0, 3);
   ( <div className='flex flex-col items-center'>
     
      <div className='mx-[4%] w-[95%]  my-16 max-w-[1100px]'>
-     <h1 className='font-bold text-[34px] mb-3'>{data.heading}</h1>
+     <h1 className='font-bold text-[34px] mb-3'>{data.title}</h1>
      <h3 className='text-slate-500 text-[19px] mt-[15px]'>
             {new Date(data.timeStamp).toLocaleString('en-US', { month: 'long' })}
             {' '}
@@ -88,7 +91,7 @@ const slicedRelatedPosts = filterpost.slice(0, 3);
             
             </h3>
       <div className='h-[500px]  flex justify-center items-center w-full'>
-        <img className='h-[inherit]' src={data.image} alt="" />
+        <img className='h-[inherit]' src={data.image ''} alt="" />
       </div>
     
     <p className='text-[20px] my-10'>{data.description}</p>
