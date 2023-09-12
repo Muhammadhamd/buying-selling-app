@@ -7,21 +7,21 @@ import {client} from "./../../mongodb.mjs"
 const db = client.db("userdatabase"),
       col = db.collection("users")
 
-router.get("/currentuser", async(req,res)=>{
+// router.get("/currentuser", async(req,res)=>{
 
-    const currentUserEmail = res.locals.decodedData
+//     const currentUserEmail = res.locals.decodedData
 
 
-    const userData =await col.findOne({email:currentUserEmail})
+//     const userData =await col.findOne({email:currentUserEmail})
 
-    res.send(userData)
-    console.log("ytfrujyhy",userData)
+//     res.send(userData)
+//     console.log("ytfrujyhy",userData)
 
-    // res.status()
+//     // res.status()
 
    
 
-})
+// })
 
 
 router.get(`/users`, async(req,res,next)=>{

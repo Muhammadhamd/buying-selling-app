@@ -18,62 +18,12 @@ import apiv1 from "./v1/index.mjs"
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({
-    origin: ['http://localhost:4000', "*"],
+    origin: ['http://localhost:3000', "*"],
     credentials: true
 }));
 
 
-app.use(authrouter)
-
-app.use((req, res, next) => {
-
-    console.log("req.cookies: ", req.cookies.token);
-
-    if (!req?.cookies?.token) {
-        // res.status(401).send({
-        //     message: "include http-only credentials with every request"
-        // })
-        return res.redirect("/registration")
-     }
-
-    jwt.verify(req.cookies.token, SECRET, function (err, decodedData) {
-        if (!err) {
-
-            console.log("decodedData: ", decodedData);
-
-           
-            const nowDate = new Date().getTime() / 1000;
-
-            if (decodedData.exp < nowDate) {
-
-                res.status(401);
-                res.cookie('token', '', {
-                    maxAge: 1,
-                    httpOnly: true
-                });
-                res.redirect("/registration")
-                return
-
-            } else {
-
-                console.log("token approved");
-
-                res.locals.decodedData = decodedData.email;
-                req.body.token = decodedData
-                next();
-                
-            }
-        } else {
-            res.redirect("/registration")
-        }
-    });
-})
-
-
-
 app.use(apiv1)
-
-app.use('/',express.static(__dirname))
 
 const PORT = process.env.PORT | 2344
 app.listen(PORT,()=>{
