@@ -15,7 +15,11 @@ function App(){
      <Navcomponent />
       <Routes>
         <Route exact path='/' element={<Home />} />
+<<<<<<< HEAD
         <Route exact path='/cart' element={<CartComponent />} />
+=======
+        <Route exact path='/post/:postid' element={<PostPage />} />
+>>>>>>> 9f9c6fabc1e3ba9e9e09418d7a04b65ef84bb195
         <Route exact path='/Store' element={<Store />} />
         <Route exact path='/dashboard' element={<Dashboard />} />
         <Route exact path='/Product/:productid' element={<PostPage />} />
