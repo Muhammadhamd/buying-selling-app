@@ -26,7 +26,7 @@ function Navcomponent() {
 <ul className='flex items-center gap-[30px] font-semibold text-white text-[18px]'>
 <li className=''><Link>ABOUR</Link></li>
 <li className=''><Link>CONTACT</Link></li>
-<li className=''><Link>CR</Link></li>
+<li className=''><Link to='/cart'>CR</Link></li>
 <li className=''><Link to="/dashboard">ACC</Link></li>
 
 </ul>

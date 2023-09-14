@@ -45,9 +45,9 @@ const SearchHandler = (e) => {
 const searchQuery = new URLSearchParams(location.search).get('s');
 
 useEffect(()=>{
-  console.log(searchQuery)
-  setSearchInput(searchQuery)
-
+  console.log(searchQuery, "amd searced bi" ,searchInput)
+  setSearchInput(searchQuery || '')
+  
   setisloading(true)
 axios.get(`http://localhost:2344/posts?s=${searchQuery || ""}`)
 .then((res)=>{
@@ -89,8 +89,8 @@ useEffect(()=>{
                 (e)=>
                   {setSearchInput(e.target.value)}
                   }/>
-              <SubmitBtn value="search" edit='my-[0px] rounded-[0px] shadow-none' valueOnUpload="..." Requirments={[searchInput]} />
              </div>
+             <SubmitBtn value="Search" valueOnUpload="searching.." Requirments={[searchInput]} isProcessing={isloading} />
             </form>
           </div>
           <div>
@@ -126,7 +126,7 @@ useEffect(()=>{
             found404?(<div>{found404}</div>):
             (products.length > 0 &&
               products.map((product)=>[
-                <ProductPost  key={product._id} title={product.title} price={product.price} isSale={product.salesDiscount} ratings={[0,3,4]} tag={product.tag}  />
+                <ProductPost productid={product._id}  key={product._id} title={product.title} price={product.price} isSale={product.salesDiscount} ratings={[0,3,4]} tag={product.tag}  />
               ]))
           
           }

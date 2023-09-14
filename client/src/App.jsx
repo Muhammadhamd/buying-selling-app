@@ -7,6 +7,7 @@ import Store from "./component/store";
 import Dashboard from "./component/dashboard";
 import Navcomponent from "./component/navbar";
 import Footercomponent from "./component/footer";
+import CartComponent from "./component/cart";
 function App(){
 
   return(
@@ -14,8 +15,10 @@ function App(){
      <Navcomponent />
       <Routes>
         <Route exact path='/' element={<Home />} />
+        <Route exact path='/cart' element={<CartComponent />} />
         <Route exact path='/Store' element={<Store />} />
         <Route exact path='/dashboard' element={<Dashboard />} />
+        <Route exact path='/Product/:productid' element={<PostPage />} />
       </Routes>
      <Footercomponent />
     </Router>

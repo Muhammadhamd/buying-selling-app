@@ -126,6 +126,7 @@ router.get("/post/:postId",async (req,res)=>{
         return;
     }
 
+    res.send(post)
 
 
     
