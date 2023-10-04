@@ -8,6 +8,7 @@ const router = express.Router()
 
 
 router.use(cartRouter)
+router.use(authRouter)
 router.use(userdata)
 router.use(profileRouter)
 router.use(postRouter)

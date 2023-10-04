@@ -6,6 +6,7 @@ import ProductPost from './LatestPost';
 import SubmitBtn from './submitbtn';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingComponent from './Loading';
+import Navcomponent from './navbar';
 function Store(){
 const [searchInput , setSearchInput] = useState("")
 const [isloading , setisloading] = useState(false)
@@ -80,6 +81,8 @@ useEffect(()=>{
     return(
 
       <div className='bg-[#f5f7f9] flex justify-around md:py-[70px] py-[50px]'>
+     <Navcomponent />
+
         <div>
           <div>
             <form className=' md:max-w-[300px]' onSubmit={SearchHandler}>
@@ -126,11 +129,7 @@ useEffect(()=>{
             found404?(<div>{found404}</div>):
             (products.length > 0 &&
               products.map((product)=>[
-<<<<<<< HEAD
                 <ProductPost productid={product._id}  key={product._id} title={product.title} price={product.price} isSale={product.salesDiscount} ratings={[0,3,4]} tag={product.tag}  />
-=======
-                <ProductPost postid={product._id} key={product._id} title={product.title} price={product.price} isSale={product.salesDiscount} ratings={[0,3,4]} tag={product.tag}  />
->>>>>>> 9f9c6fabc1e3ba9e9e09418d7a04b65ef84bb195
               ]))
           
           }

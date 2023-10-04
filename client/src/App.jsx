@@ -8,18 +8,17 @@ import Dashboard from "./component/dashboard";
 import Navcomponent from "./component/navbar";
 import Footercomponent from "./component/footer";
 import CartComponent from "./component/cart";
+import UserLogin from "./component/login";
+import UserRegister from "./component/register";
 function App(){
 
   return(
     <Router>
-     <Navcomponent />
       <Routes>
         <Route exact path='/' element={<Home />} />
-<<<<<<< HEAD
+        <Route exact path='/login' element={<UserLogin />} />
+        <Route exact path='/register' element={<UserRegister />} />
         <Route exact path='/cart' element={<CartComponent />} />
-=======
-        <Route exact path='/post/:postid' element={<PostPage />} />
->>>>>>> 9f9c6fabc1e3ba9e9e09418d7a04b65ef84bb195
         <Route exact path='/Store' element={<Store />} />
         <Route exact path='/dashboard' element={<Dashboard />} />
         <Route exact path='/Product/:productid' element={<PostPage />} />

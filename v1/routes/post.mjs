@@ -125,10 +125,6 @@ router.get("/post/:postId",async (req,res)=>{
         res.send("this post maybe deleted or disent exist")
         return;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 9f9c6fabc1e3ba9e9e09418d7a04b65ef84bb195
     res.send(post)
 
 

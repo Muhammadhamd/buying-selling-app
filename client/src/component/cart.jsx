@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios"
 import oproductimg from "../img/productjeans1.jpg"
+import Navcomponent from './navbar';
 
 const CartComponent = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -41,6 +42,8 @@ const CartComponent = () => {
 
   return (
     <div className="container mx-auto mt-10">
+     <Navcomponent />
+
       <h1 className="text-3xl font-semibold mb-6">Shopping CartComponent</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>

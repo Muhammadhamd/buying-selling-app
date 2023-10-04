@@ -8,11 +8,7 @@ import "../css/product.css"
 import axios from 'axios';
 
 
-<<<<<<< HEAD
 function ProductPost({productImg , title , price ,tag , ratings ,isSale , productid}) {
-=======
-function ProductPost({productImg , title , price ,tag , ratings ,isSale , postid}) {
->>>>>>> 9f9c6fabc1e3ba9e9e09418d7a04b65ef84bb195
 
   const totalRating = ratings.reduce((value , currentvalue)=> value + currentvalue)
 
@@ -40,12 +36,7 @@ const discountedPrice =  Math.floor(price - (isSale * price / 100 ))
         {isSale &&
         <div className='absolute top-[10px] left-[15px] bg-white shadow rounded-full px-3 py-1'>Sale</div>
       }
-<<<<<<< HEAD
        <Link to={`/product/${productid}`}> <div className='w-full mb-[1em] '>
-=======
-       <Link to={`/post/${postid}`}>
-       <div className='w-full mb-[1em] '>
->>>>>>> 9f9c6fabc1e3ba9e9e09418d7a04b65ef84bb195
           <img src={oproductimg|| productImg} alt="" />
         </div></Link>
        </div>
