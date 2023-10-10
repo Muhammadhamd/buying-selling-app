@@ -8,9 +8,10 @@ const __dirname = path.resolve()
 const router = express.Router()
 import {client} from "./../../mongodb.mjs"
 import { type } from "os"
+import { match } from "assert"
 
 const db = client.db("userdatabase"),
-      userCol = db.collection("users"),
+      productcol = db.collection("posts"),
       cartsCol = db.collection('carts')
 
 
@@ -18,41 +19,11 @@ const db = client.db("userdatabase"),
 
 
 
-
-const cartSchema = new mongoose.Schema({
-
-   
-    userId:{
-        type:String,
-        
-    },
-    timeStamp:{
-        type: Date,
-        default: Date.now
-    },
-   
-    cartItems:[
-        {
-        productId:String,
-        quantity:{
-            require:true,
-            type:Number
-        }
-    }
-    ],
-    
-    
    
     
    
-    // image:{
-    //     type:String,
-    //     required:true
-    // } ,
-        
-})
 
-const CartModel = mongoose.model("cart", cartSchema)
+
 
 
   
@@ -64,23 +35,23 @@ router.post("/addtocart", async(req,res)=>{
     // const currentUserEmail = res.locals.decodedData
     const {isdata}= req.body
     console.log(isdata)
-    const cart =await cartsCol.findOne({userId:"1"})
+    const cart =await cartsCol.findOne({userId : req.body.decodedData._id})
 
     if (cart) {
         const cartItemArray = cart.cartItems
 
        const matchitems =  cartItemArray.findIndex((item)=> {
-        return item.productId.toString() === isdata.productid
+        return item.productId === isdata.productid
        })
 
-      if (matchitems !== -1) {
-
+      if (matchitems > -1) {
+console.log(matchitems)
 
         cartItemArray[matchitems].quantity = isdata.Quantity
-        console.log(cartItemArray[matchitems].quantity)
+        // console.log(cartItemArray[matchitems].quantity)
          cartsCol.updateOne(
             {
-                userId:"1",
+                userId:req.body.decodedData._id,
             }
             ,{
                 $set:{
@@ -102,7 +73,7 @@ router.post("/addtocart", async(req,res)=>{
         cart.cartItems.push(newcartItem)
 
         cartsCol.updateOne(
-            {userId:"1"},
+            {userId:req.body.decodedData._id},
             { $set:{cartItems:cart.cartItems}}
         )
         res.send("added to cart")
@@ -114,10 +85,9 @@ router.post("/addtocart", async(req,res)=>{
    const dataTOarray= [isdata]
 
    
-   const addtocart = await CartModel.create({
-    // username: userData.username,
-    userId: '1',
-    // sellername:userData.name,
+   const addtocart = await cartsCol.insertOne({
+  
+    userId:req.body.decodedData._id,
     cartItems:[
         {
             productId:isdata.productid,
@@ -131,12 +101,29 @@ router.post("/addtocart", async(req,res)=>{
 
 
 router.get("/getcartdata",async(req,res)=>{
-    const cart =await cartsCol.findOne({userId:"1"})
+    const cart =await cartsCol.findOne({userId:req.body.decodedData._id})
 
-    if (cart) {
-        const cartItems = await cart.cartItems
-        res.send(cartItems)
+    if (!cart) {
+      res.send("Cart is Empty")
+      return
+    
     }
 
+        const cartItems = await cart.cartItems
+        console.log(cartItems)
+        const productid = cartItems?.map((item) => new ObjectId(item.productId));
+        console.log(productid)
+        const posts = await productcol.find({ _id: { $in: productid } }).toArray()
+        // res.send(posts)
+        
+        const cartData = cartItems.map((cartItem) => {
+            const product = posts.find((p) => p._id.equals(cartItem.productId));
+            return {
+              ...product,
+              quantity: cartItem.quantity,
+            };
+          });
+        res.json(cartData)
 })
-export default router
+export default router   
+            

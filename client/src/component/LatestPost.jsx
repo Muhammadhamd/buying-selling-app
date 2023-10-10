@@ -4,27 +4,45 @@ import app from '../firebaseConfig.mjs'
 import oproductimg from "../img/productjeans1.jpg"
 import {  getStorage, ref, uploadBytes , getDownloadURL  } from "firebase/storage";
 import "../css/product.css"
-
 import axios from 'axios';
 
 
 function ProductPost({productImg , title , price ,tag , ratings ,isSale , productid}) {
-
-  const totalRating = ratings.reduce((value , currentvalue)=> value + currentvalue)
-
-  const averageRating = totalRating / ratings.length
-    
-  const maxRating = 5; // Maximum rating value
-
-  // Create an array of stars based on the averageRating
-  const starIcons = [];
-  for (let i = 1; i <= maxRating; i++) {
-    if (i <= averageRating) {
-      starIcons.push(<i key={i} className="fa fa-star"></i>); // Filled star
+  const [rateingarray , setratingarray] =useState([])
+  useEffect(() => {
+    if (ratings && ratings.length > 0) {
+      const totalRating = ratings.reduce((sum, ratingObj) => sum + ratingObj.rating, 0);
+      const averageRating = totalRating / ratings.length;
+      const starIcons = [];
+  
+      for (let i = 1; i <= 5; i++) {
+        if (i <= averageRating) {
+          starIcons.push(
+          
+              <i key={i} className="fa fa-star text-gold"></i>
+           
+          ); // Filled star
+        } else {
+          starIcons.push(
+         
+              <i key={i} className="fa fa-star-o text-gold"></i>
+           
+          ); // Empty star
+        }
+      }
+  
+      setratingarray(starIcons);
     } else {
-      starIcons.push(<i key={i} className="fa fa-star-o"></i>); // Empty star
+      // If there are no ratings, display empty stars
+      
+        
+          <i className="fa fa-star-o text-gold"></i>
     }
-  }
+     
+     
+    
+  }, [ratings]);
+  
 
 const discountedPrice =  Math.floor(price - (isSale * price / 100 ))
     return (
@@ -56,7 +74,7 @@ const discountedPrice =  Math.floor(price - (isSale * price / 100 ))
         }
         <div className='flex'>
         
-        {starIcons}
+        {rateingarray}
 
         </div>
       </div>

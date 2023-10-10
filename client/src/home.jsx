@@ -17,11 +17,31 @@ import Footercomponent from './component/footer';
 
 
 function Home() {
+  const [isLogin , setIslogin] = useState(false)
+  const [userdata , setUserData] = useState([])
+
+const userlogincheckhnadler = async() =>{
+
+  try {
+    const res = await axios.get("http://localhost:2344/currentuser",{
+      withCredentials: true,
+    })
+      setIslogin(true)
+      setUserData(res.data)
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+}
+useEffect(()=>{
+  userlogincheckhnadler()
+  console.log(userdata)
+},[isLogin])
 
   return (
    <div>
      <div className='service-div'>
-  <Navcomponent />
+  <Navcomponent islogin={isLogin} img={userdata.image} />
 
   <div className='overlay'>
 

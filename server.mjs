@@ -12,9 +12,9 @@ import cors from "cors"
 const SECRET = process.env.SECRET || "topsecret";
 import authrouter from "./v1/routes/auth.mjs"
 import apiv1 from "./v1/index.mjs"
-
-
-
+import userinfoRoutes from './v1/routes/userinfo.mjs'
+import cartRoutes from "./v1/routes/cart.mjs"
+import ratingroutes from './v1/routes/rating.mjs'
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({
@@ -29,7 +29,7 @@ app.use(apiv1)
 
 app.use((req, res, next) => {
 
-    console.log("req.cookies: ", req.cookies.token);
+    console.log("req.cookies: ", req.cookies.Token);
 
     if (!req?.cookies?.Token) {
         res.status(401).send({
@@ -58,7 +58,8 @@ app.use((req, res, next) => {
 
                 console.log("token approved");
 
-                req.body.token = decodedData
+                req.body.decodedData = decodedData
+                console.log(decodedData)
                 next();
             }
         } else {
@@ -66,8 +67,9 @@ app.use((req, res, next) => {
         }
     });
 })
-
-
+app.use(cartRoutes)
+app.use(ratingroutes)
+app.use(userinfoRoutes)
 const PORT = process.env.PORT | 2344
 app.listen(PORT,()=>{
     console.log(PORT)

@@ -1,9 +1,30 @@
-import react, { useRef } from 'react'
+import react, { useEffect, useRef, useState } from 'react'
 import Navcomponent from './navbar'
-
 import axios from 'axios'
+import { useNavigate  } from 'react-router-dom';
 function UserLogin(){
+  const history = useNavigate()
+const [isUser , setIsUser] = useState([])
+  const usercheckHandler = async() =>{
+    try {
+     const res =  await  axios.get("http://localhost:2344/currentuser",{
+      withCredentials: true,
+     })
+    .then((res)=>{
+      console.log(res)
+      setIsUser(res.data)
+      console.log(setIsUser)
+      history('/')
+    })
 
+    .catch((e)=>{
+      console.log(e)
+    })
+    console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
     const passwordref = useRef(null)
     const emailref = useRef(null)
 
@@ -36,10 +57,16 @@ function UserLogin(){
         }
       };
     
+      useEffect(()=>{
+
+        usercheckHandler()
+      },[])
     return(
         <>
         <Navcomponent />
-        <div className='flex flex-col items-center '>
+        {
+          isUser ?
+        (<div className='flex flex-col items-center '>
             <h1 className='font-bold text-6xl my-[20px]'>Login</h1>
             <form onSubmit={submitHandler} className='max-w-[600px] w-full  shadow p-[20px]'>
                 <input type="email" className='px-4 py-3 rounded border w-full my-[7px] '
@@ -51,7 +78,8 @@ function UserLogin(){
                 />
                 <input type="submit" value="login" className='bg-violet-500 rounded shadow px-5 py-3 text-white font-semibold' />
             </form>
-        </div>
+        </div>):null
+}
         </>
     )
 }

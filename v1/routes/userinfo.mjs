@@ -1,27 +1,24 @@
 import express from 'express'
 import jwt from "jsonwebtoken"
-import  mongoose  from 'mongoose'
+import  mongoose, { connect }  from 'mongoose'
 const router = express.Router()
 import {client} from "./../../mongodb.mjs"
 
 const db = client.db("userdatabase"),
       col = db.collection("users")
 
-// router.get("/currentuser", async(req,res)=>{
+router.get("/currentuser", async(req,res)=>{
 
-//     const currentUserEmail = res.locals.decodedData
+    const currentUserEmail = req.body.decodedData
+console.log(currentUserEmail)
 
+    res.send(currentUserEmail)
 
-//     const userData =await col.findOne({email:currentUserEmail})
-
-//     res.send(userData)
-//     console.log("ytfrujyhy",userData)
-
-//     // res.status()
+    // res.status()
 
    
 
-// })
+})
 
 
 router.get(`/users`, async(req,res,next)=>{

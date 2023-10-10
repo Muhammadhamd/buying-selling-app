@@ -7,10 +7,13 @@ import SubmitBtn from './submitbtn';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingComponent from './Loading';
 import Navcomponent from './navbar';
+
 function Store(){
 const [searchInput , setSearchInput] = useState("")
 const [isloading , setisloading] = useState(false)
+const [islogin , setislogin] = useState(false)
 const [products , setProducts]= useState([])
+const [userdata , setuserdata] = useState([])
 const [found404 , setfound404]= useState(false)
 const navigate = useNavigate();
 const location = useLocation();
@@ -42,6 +45,21 @@ const SearchHandler = (e) => {
     })
 }
 
+const userLoginCheckHandler = async() =>{
+
+  try {
+    const res = await axios.get("http://localhost:2344/currentuser",{
+      withCredentials: true,
+    })
+    setislogin(true)
+    console.log(res)
+    setuserdata(res.data)
+  } catch (error) {
+    console.log(error)
+    setislogin(false)
+  }
+}
+
 
 const searchQuery = new URLSearchParams(location.search).get('s');
 
@@ -65,6 +83,9 @@ axios.get(`http://localhost:2344/posts?s=${searchQuery || ""}`)
 
 })
 },[])
+useEffect(()=>{
+  userLoginCheckHandler()
+},[islogin])
 
 useEffect(()=>{
   const mentags = products.filter((product)=>product.tag === 'Men').map((product)=>product.tag)
@@ -80,8 +101,10 @@ useEffect(()=>{
 
     return(
 
+     <>
+     <Navcomponent islogin={islogin} img={userdata.image}/>
+
       <div className='bg-[#f5f7f9] flex justify-around md:py-[70px] py-[50px]'>
-     <Navcomponent />
 
         <div>
           <div>
@@ -128,15 +151,24 @@ useEffect(()=>{
           :
             found404?(<div>{found404}</div>):
             (products.length > 0 &&
-              products.map((product)=>[
-                <ProductPost productid={product._id}  key={product._id} title={product.title} price={product.price} isSale={product.salesDiscount} ratings={[0,3,4]} tag={product.tag}  />
-              ]))
+              products.map((product) => (
+                <ProductPost
+                  productid={product._id}
+                  key={product._id}
+                  title={product.title}
+                  price={product.price}
+                  isSale={product.salesDiscount}
+                  ratings={product.rating} // Map the ratings array correctly
+                  tag={product.tag}
+                />
+              )))
           
           }
   
          </div>
         </div>
       </div>
+     </>
   
     )
 }

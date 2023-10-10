@@ -10,12 +10,14 @@ import Footercomponent from "./component/footer";
 import CartComponent from "./component/cart";
 import UserLogin from "./component/login";
 import UserRegister from "./component/register";
+import Profile from "./component/profile";
 function App(){
 
   return(
     <Router>
       <Routes>
         <Route exact path='/' element={<Home />} />
+        <Route exact path='/profile' element={<Profile />} />
         <Route exact path='/login' element={<UserLogin />} />
         <Route exact path='/register' element={<UserRegister />} />
         <Route exact path='/cart' element={<CartComponent />} />

@@ -30,7 +30,7 @@ const col = db.collection("users")
 
                     // searchedUserData(user)
                     if (user) {
-                        res.sendFile(path.join(__dirname , "public/profile.html"))
+                        // res.sendFile(path.join(__dirname , "public/profile.html"))
                     return;
                 }
                 
