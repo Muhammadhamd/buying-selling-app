@@ -7,7 +7,7 @@ function UserLogin(){
 const [isUser , setIsUser] = useState([])
   const usercheckHandler = async() =>{
     try {
-     const res =  await  axios.get("http://localhost:2344/currentuser",{
+     const res =  await  axios.get("/currentuser",{
       withCredentials: true,
      })
     .then((res)=>{
@@ -33,7 +33,7 @@ const [isUser , setIsUser] = useState([])
         console.log('eee')
         try {
           const response = await axios.post(
-            'http://localhost:2344/userlogin',
+            '/userlogin',
             {
               email: emailref.current.value,
               password: passwordref.current.value,

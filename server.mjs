@@ -70,7 +70,12 @@ app.use((req, res, next) => {
 app.use(cartRoutes)
 app.use(ratingroutes)
 app.use(userinfoRoutes)
-const PORT = process.env.PORT | 2344
+
+app.use(express.static(path.join(__dirname, 'client/build')))
+app.get(express.static(path.join(__dirname, 'client/build')))
+app.use("*", express.static(path.join(__dirname, 'client/build')))
+
+const PORT = process.env.PORT || 2344
 app.listen(PORT,()=>{
     console.log(PORT)
 })

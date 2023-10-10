@@ -20,7 +20,7 @@ console.log('eee')
               formdata.append('name', nameref.current.value);
               formdata.append('ProfileImage',img);
           const response = await axios.post(
-            'http://localhost:2344/userregister',
+            '/userregister',
               formdata,
             
             {

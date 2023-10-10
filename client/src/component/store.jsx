@@ -27,7 +27,7 @@ const SearchHandler = (e) => {
 
   const encodedSearchInput = encodeURIComponent(searchInput);
   navigate(`/store?s=${encodedSearchInput}`);
-  axios.get(`http://localhost:2344/posts?s=${searchInput}`)
+  axios.get(`/posts?s=${searchInput}`)
     .then((res) => {
       setProducts(res.data);
       console.log(res.data)
@@ -48,7 +48,7 @@ const SearchHandler = (e) => {
 const userLoginCheckHandler = async() =>{
 
   try {
-    const res = await axios.get("http://localhost:2344/currentuser",{
+    const res = await axios.get("/currentuser",{
       withCredentials: true,
     })
     setislogin(true)
@@ -68,7 +68,7 @@ useEffect(()=>{
   setSearchInput(searchQuery || '')
   
   setisloading(true)
-axios.get(`http://localhost:2344/posts?s=${searchQuery || ""}`)
+axios.get(`/posts?s=${searchQuery || ""}`)
 .then((res)=>{
   console.log(res.data)
   setProducts(res.data)

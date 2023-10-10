@@ -17,7 +17,7 @@ function Adminlogin (){
       e.preventDefault()
       setisPosting(true)
 
-     await axios.post("http://localhost:5000/login",{
+     await axios.post("/login",{
         email:email,
         password:password
       },{
@@ -38,7 +38,7 @@ function Adminlogin (){
     }
    const logoutFunction =async(e)=>{
     e.preventDefault()
-      await axios.get("http://localhost:5000/logout",{
+      await axios.get("/logout",{
         withCredentials: true,
      })
     .then((res)=>{console.log(res.data)

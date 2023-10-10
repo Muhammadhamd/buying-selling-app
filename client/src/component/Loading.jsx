@@ -7,7 +7,7 @@ function LoadingComponent({isLoading}) {
     const [imgDp, setImgDp ] = useState()
     const [name, setname ] = useState()
     // useEffect(()=>{
-    //     axios.get("http://localhost:5000/mydata")
+    //     axios.get("/mydata")
     //     .then((res)=>{
           
       

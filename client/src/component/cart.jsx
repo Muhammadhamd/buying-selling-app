@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios"
 import oproductimg from "../img/productjeans1.jpg"
 import Navcomponent from './navbar';
@@ -7,9 +7,12 @@ import { Link } from 'react-router-dom';
 const CartComponent = () => {
   const [cartItems, setCartItems] = useState([]);
   const [islogin, setislogin] = useState();
+  const [OrderFormRender, setOrderFormRender] = useState(false);
   const [loginData, setloginData] = useState();
+  const cnic= useRef();
+  const cartNumber =useRef(null)
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const quantityRef = useRef()
 
 
 
@@ -27,8 +30,25 @@ const CartComponent = () => {
       setislogin(false)
     }
   }
+ const setorderHandler = async() =>{
 
-
+  try {
+    const res = await axios.get("/Order",{
+      User_Cnic: cnic,
+      User_cartNumber: cartNumber,
+      Products:cartItems,
+      totalPrice:totalPrice
+    },{
+      withCredentials:true
+    })
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+ }
+const OrderCartHndler = () =>{
+  setOrderFormRender(true)
+}
 
   useEffect(() => {
     // Fetch cart items and total price from your API or state management
@@ -74,7 +94,34 @@ const CartComponent = () => {
 
   return (
 <>
+{
+  OrderFormRender && <div className='flex w-full h-[100vh] justify-center items-center fixed bg-[#00000061]'
+  onClick={(e)=>{
+    setOrderFormRender(false)
+  }}
+  >
+    
+  <form onSubmit={setorderHandler} className='p-[20px]   top-[50px]  flex flex-col items-center gap-[25px] max-w-[400px] w-full shadow-xl rounded bg-white'>
+    <div className='flex flex-col w-full'>
+      <label htmlFor="" className='text-slate-500 text-base'>
+        Your Cart Number
+      </label>
+      <input type="text"  className='border rounded px-6 py-2 ' ref={cartNumber}/>
+    </div>
+    <div className='flex flex-col w-full'>
+      <label htmlFor="" className='text-slate-500 text-base'>
+        Your Cnic
+      </label>
+      <input type="text"  className='border rounded px-6 py-2 ' ref={cnic}/>
+    </div>
+    <input type="submit" value="confirm Order" className='px-8 py-2 font-semibold bg-violet-500 rounded shadow my-[5] text-white'/>
+  </form>
+  </div>
+}
+
 <Navcomponent islogin={islogin} img={loginData?.image} />
+
+
 
 <div className="container mx-auto mt-10">
 
@@ -105,7 +152,7 @@ const CartComponent = () => {
             </Link>
 
               <td className="p-2">{item.title||"men jeanss"}</td>
-              <td className="p-2">{item.quantity}</td>
+              <td className="p-2"><input type="number" value={item.quantity} /></td>
               <td className="p-2">${item.price||300}</td>
               <td className="p-2">${item.price * item.quantity}</td>
               {/* <td className="p-2">
@@ -122,8 +169,10 @@ const CartComponent = () => {
       </table>
       <div className="mt-6">
         <p className="text-xl font-semibold">Total Price: ${totalPrice}</p>
-        <button className="bg-blue-500 text-white px-4 py-2 mt-4">
-          Proceed to Checkout
+        <button className="bg-blue-500 text-white px-4 py-2 mt-4"
+        onClick={OrderCartHndler}
+        >
+          Order TO delivery
         </button>
       </div>
     </>

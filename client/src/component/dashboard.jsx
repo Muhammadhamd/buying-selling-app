@@ -24,7 +24,7 @@ function Dashboard() {
 
         setProductsArray((ProductsArray)=>[...ProductsArray , newAdd])
 
-        axios.post("http://localhost:2344/post", {
+        axios.post("/post", {
             title:title,
             description:description,
             price:price,

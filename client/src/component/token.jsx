@@ -8,7 +8,7 @@ function UseToken(){
   useEffect(() => {
     // Fetch the token when the component mounts
       axios
-      .get("http://localhost:5000/token",{
+      .get("/token",{
         withCredentials: true,
       })
       .then((res) => {
