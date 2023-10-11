@@ -102,9 +102,9 @@ useEffect(()=>{
     return(
 
      <>
-     <Navcomponent islogin={islogin} img={userdata.image}/>
+     <Navcomponent islogin={islogin} img={userdata.image} changeCss={true}/>
 
-      <div className='bg-[#f5f7f9] flex justify-around md:py-[70px] py-[50px]'>
+      <div className='bg-[#f5f7f9] max-[600px]:flex-col px-[30px] flex justify-around md:py-[70px] py-[50px]'>
 
         <div>
           <div>
@@ -122,7 +122,7 @@ useEffect(()=>{
           <div>
             <h1>Catogries</h1>
             <div>
-              <ul>
+              <ul className='max-[600px]:flex gap-[10px] my-[10px]'>
                 <li>Men({mentag.current.length})</li>
                 <li>Women({womentag.current.length})</li>
                 <li>Children({childrentag.current.length})</li>

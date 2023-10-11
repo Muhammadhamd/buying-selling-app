@@ -46,7 +46,7 @@ console.log('eee')
       },[img])
     return(
         <>
-        <Navcomponent />
+        <Navcomponent changeCss={true}/>
         <div className='w-full flex flex-col items-center'>
         <h1 className='font-bold text-6xl my-[20px]'>Register</h1>
 

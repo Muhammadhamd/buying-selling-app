@@ -238,7 +238,7 @@ useEffect(()=>{
 
   return (
   <>
-     <Navcomponent islogin={islogin} img={userdata.image} />
+     <Navcomponent islogin={islogin} img={userdata.image} changeCss={true}/>
 
    {isLoading ?
    (

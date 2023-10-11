@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import {Link} from "react-router-dom"
 import banner1 from './img/image 1.jpg'
 import "./App.css"
 import app from './firebaseConfig.mjs'
@@ -43,14 +44,14 @@ useEffect(()=>{
      <div className='service-div'>
   <Navcomponent islogin={isLogin} img={userdata.image} />
 
-  <div className='overlay'>
+  <div className=' overlay'>
 
 <div className='h-full flex flex-col justify-center gap-[40px] ml-[5%]'>
-<h1 className=' max-w-[600px] leading-[1.2em] font-[600] text-white text-7xl tracking-tight'>Raining Offers For Hot Summer!</h1>
-<h3 className='text-4xl text-white font-semibold tracking-tight'>25% Off On All Products</h3>
-<div className='flex gap-[20px] '>
-  <button className='font-bold text-base text-black px-8 py-4 bg-white hover:bg-black hover:text-white transition ease-in-out'>SHOP NOW</button>
-  <button className='font-bold text-base text-white px-8 py-4 bg-transparent border-4 border-white hover:bg-white hover:text-black transition ease-in-out'>FIND MORE</button>
+<h1 className=' max-w-[600px] leading-[1.2em] font-[600] text-white max-[600px]:text-5xl text-7xl tracking-tight'>Raining Offers For Hot Summer!</h1>
+<h3 className='text-4xl max-[600px]:text-3xl text-white font-semibold tracking-tight'>25% Off On All Products</h3>
+<div className='flex max-[400px]:flex-col gap-[20px] '>
+  <button className='font-bold max-[500px]:w-[90%] text-base text-black max-[500px]:px-5 max-[500px]:py-3 px-8 py-4 bg-white hover:bg-black hover:text-white transition ease-in-out'><Link to='/store'>SHOP NOw</Link></button>
+  <button className='font-bold max-[500px]:w-[90%]  max-[500px]:px-5 max-[500px]:py-3 text-base text-white px-8 py-4 bg-transparent border-4 border-white hover:bg-white hover:text-black transition ease-in-out'><Link to='/store'>FIND MORE</Link></button>
 </div>
 </div>
   </div>
@@ -73,39 +74,38 @@ useEffect(()=>{
     </div>
     <div className='service-div2'>
     <div className='h-full flex flex-col justify-center gap-[30px] ml-[6%] text-white'>
-      <h3 className='font-semibold text-xl'>Limited Time Offer</h3>
-      <h1 className='font-semibold text-5xl'>Special Edition</h1>
-      <p className='font-regular text-[18px] max-w-[600px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-      <h3 className='font-semibold text-xl'>Buy This T-shirt At 20% Discount, Use Code OFF20</h3>
+      <h3 className=' max-[500px]:text-base font-semibold text-xl'>Limited Time Offer</h3>
+      <h1 className=' max-[500px]:text-4xl font-semibold text-5xl'>Special Edition</h1>
+      <p className=' max-[500px]:text-[16px] font-regular text-[18px] max-w-[600px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+      <h3 className='max-[500px]:text-base font-semibold text-xl'>Buy This T-shirt At 20% Discount, Use Code OFF20</h3>
   <div>
-  <button className='font-bold text-base text-black px-8 py-4 bg-white hover:bg-black hover:text-white transition ease-in-out'>SHOP NOW</button>
+  <button className='max-[500px]:w-[90%]  max-[500px]:px-5 max-[500px]:py-3  font-bold text-base text-black px-8 py-4 bg-white hover:bg-black hover:text-white transition ease-in-out'><Link to='/store'>SHOP NOw</Link></button>
   </div>
       
     </div>
     </div>
     <div className='flex gap-[30px] justify-center flex-wrap'>
     <div className='flex  gap-[20px] flex-col items-center max-w-[300px] text-center'>
-        <img className='w-full md:w-[30%]'  src={globeimg} alt="" />
+        <img className='w-[100px] md:w-[30%]'  src={globeimg} alt="" />
         <h1 className='font-semibold text-xl'>Secure Payments</h1>
         <p className='leading-[1.25em]'>It elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
       </div>
       <div className='flex gap-[20px]  flex-col items-center max-w-[300px] text-center'>
-        <img  className='w-full md:w-[30%]' src={qualityimg} alt="" />
+        <img  className='w-[100px] md:w-[30%]' src={qualityimg} alt="" />
         <h1 className='font-semibold text-xl'>Secure Payments</h1>
         <p className='leading-[1.25em]'>It elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
       </div>
       <div className='flex gap-[20px]  flex-col items-center max-w-[300px] text-center'>
-        <img  className='w-full md:w-[30%]' src={tagimg} alt="" />
+        <img  className='w-[100px] md:w-[30%]' src={tagimg} alt="" />
         <h1 className='font-semibold text-xl'>Secure Payments</h1>
         <p className='leading-[1.25em]'>It elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
       </div>
       <div className='flex gap-[20px]  flex-col items-center max-w-[300px] text-center'>
-        <img  className='w-full md:w-[30%]' src={lockimg} alt="" />
+        <img  className='w-[100px] md:w-[30%]' src={lockimg} alt="" />
         <h1 className='font-semibold text-xl'>Secure Payments</h1>
         <p className='leading-[1.25em]'>It elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
       </div>
     </div>
-    <Footercomponent />
    </div>
   );
 }

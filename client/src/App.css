@@ -4,6 +4,14 @@
   background-size: cover;
   background-attachment: fixed;
 }
+@media screen and (max-width:500px) {
+  .service-div{
+    background-position:bottom ;
+  }
+  .service-div2{
+    background-position-x:-265px;
+  }
+}
 
 .overlay{
   background: linear-gradient(180deg,#0084D6 -50%,#000000 100%);

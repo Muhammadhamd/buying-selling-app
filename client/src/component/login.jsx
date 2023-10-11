@@ -63,7 +63,7 @@ const [isUser , setIsUser] = useState([])
       },[])
     return(
         <>
-        <Navcomponent />
+        <Navcomponent changeCss={true}/>
         {
           isUser ?
         (<div className='flex flex-col items-center '>

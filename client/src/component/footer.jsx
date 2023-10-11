@@ -43,10 +43,10 @@ function Footercomponent() {
       <div className='flex justify-between border-t-2  px-16 py-6'>
         <h1 className=' text-xl text-slate-500'>Developed by Muhammad Hamd say hi</h1>
         <ul className='flex flex-wrap gap-[30px] text-2xl'>
-          <li><Link><i className='fa fa-facebook'></i></Link></li>
-          <li><Link><i className=' fa fa-github '></i></Link></li>
-          <li><Link><i className='fa fa-instagram'></i></Link></li>
-          <li><Link><i className='fa fa-linkedin'></i></Link></li>
+          <li><Link to='https://facebook.com/muhammadhamd11'><i className='fa fa-facebook'></i></Link></li>
+          <li><Link to='https://github.com/muhammadhamd'><i className=' fa fa-github '></i></Link></li>
+          <li><Link to='https://instagram.com/hamd_studiology'><i className='fa fa-instagram'></i></Link></li>
+          <li><Link to='https://linkedin.com/n/muhammadhamd'><i className='fa fa-linkedin'></i></Link></li>
         </ul>
       </div>
     </footer>

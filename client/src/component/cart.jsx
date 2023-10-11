@@ -119,7 +119,7 @@ const OrderCartHndler = () =>{
   </div>
 }
 
-<Navcomponent islogin={islogin} img={loginData?.image} />
+<Navcomponent islogin={islogin} img={loginData?.image} changeCss={true} />
 
 
 
