@@ -55,7 +55,7 @@ const discountedPrice =  Math.floor(price - (isSale * price / 100 ))
         <div className='absolute top-[10px] left-[15px] bg-white shadow rounded-full px-3 py-1'>Sale</div>
       }
        <Link to={`/product/${productid}`}> <div className='w-full mb-[1em] '>
-          <img src={oproductimg|| productImg} alt="" />
+          <img src={productImg || oproductimg} alt="" />
         </div></Link>
        </div>
         <div className='font-bold mb-[.5em] text-[19px] tracking-[0rem]'><h1>{title}</h1></div>

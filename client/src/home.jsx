@@ -8,45 +8,81 @@ import globeimg from "./img/globe-free-img.png"
 import qualityimg from "./img/quality-free-img.png"
 import tagimg from "./img/tag-free-img.png"
 // import lockimg from "./img/lock-free-img.png"
-import {  getStorage, ref, uploadBytes , getDownloadURL  } from "firebase/storage";
 
 
 import axios, { toFormData } from 'axios';
 import Navcomponent from './component/navbar';
 import ProductPost from './component/LatestPost';
 import Footercomponent from './component/footer';
+import CustomCursor from './component/owlcursorl';
 
 
 function Home() {
   const [isLogin , setIslogin] = useState(false)
   const [userdata , setUserData] = useState([])
-
+  const [rerender , setrerender] = useState(false)
+  const [prodcuts ,setProducts] = useState([])
 const userlogincheckhnadler = async() =>{
 
   try {
-    const res = await axios.get("http://localhost:2344/currentuser",{
+    const res = await axios.get("/currentuser",{
       withCredentials: true,
     })
       setIslogin(true)
       setUserData(res.data)
-    console.log(res)
+    console.log("this is response" , res)
+
+    
   } catch (error) {
     console.log(error)
   }
 }
+const productsHandler = async () => {
+  try {
+    const res = await axios.get("/posts");
+    console.log(res);
+    const data = res.data;
+    const updatedProducts = [];
+    
+    if (data.length >= 8) {
+      for (let i = 0; i < 8; i++) {
+        updatedProducts.push(data[i]);  // Push the data into the updatedProducts array
+      }
+    }else{
+      for (let i = 0; i < data.length; i++) {
+        updatedProducts.push(data[i]);  // Push the data into the updatedProducts array
+      }
+    }
+    setProducts(updatedProducts); 
+    setrerender(true) // Update the products state
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  productsHandler();
+}, []);
+
+useEffect(() => {
+  console.log(prodcuts);
+}, [rerender]);
+
 useEffect(()=>{
   userlogincheckhnadler()
   console.log(userdata)
 },[isLogin])
 
+
   return (
    <div>
-     <div className='service-div'>
+     <div className='h-[800px] service-div'>
   <Navcomponent islogin={isLogin} img={userdata.image} />
 
-  <div className=' overlay'>
+  <div className=' overlay1'>
+  </div>
 
-<div className='h-full flex flex-col justify-center gap-[40px] ml-[5%]'>
+<div className='h-full  px-[1%] pb-[20%] pt-[5%] flex flex-col justify-center gap-[40px] ml-[5%]'>
 <h1 className=' max-w-[600px] leading-[1.2em] font-[600] text-white max-[600px]:text-5xl text-7xl tracking-tight'>Raining Offers For Hot Summer!</h1>
 <h3 className='text-4xl max-[600px]:text-3xl text-white font-semibold tracking-tight'>25% Off On All Products</h3>
 <div className='flex max-[400px]:flex-col gap-[20px] '>
@@ -54,22 +90,28 @@ useEffect(()=>{
   <button className='font-bold max-[500px]:w-[90%]  max-[500px]:px-5 max-[500px]:py-3 text-base text-white px-8 py-4 bg-transparent border-4 border-white hover:bg-white hover:text-black transition ease-in-out'><Link to='/store'>FIND MORE</Link></button>
 </div>
 </div>
-  </div>
     </div>
     <div className='bg-[#f5f7f9] pt-20 mb-20 flex flex-col items-center my-[50px]'>
       <h1 className='text-5xl font-semibold text-center mt-[20px]'>Featured Products</h1>
       <div className='max-w-[160px] w-full border-2 border-[#0084d6] my-[25px]'></div>
 
       <div className='flex flex-wrap gap-[20px] justify-center mt-[40px]'>
-        <ProductPost title="Basic Gray Jeans" ratings={[4]} isSale={33} tag="Men" price={1500} />
-        <ProductPost title="Basic Gray Jeans" ratings={[2,3,4,5,4,2,1,4,3]} tag="Men" price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
-        <ProductPost title="men jeans" tag="Men" ratings={[2,3,4,5,4,2,1,4,3]} price={1500} />
+        {
+          prodcuts.length > 0 &&
+         prodcuts.map((product) => [
+          <ProductPost
+            productid={product._id}
+            key={product._id}
+            title={product.title}
+            price={product.price}
+            isSale={product.salesDiscount}
+            ratings={product.rating} // Map the ratings array correctly
+            tag={product.tag}
+            productImg={product.img}
+          />
+         ])
+        }
+       
       </div>
     </div>
     <div className='service-div2'>

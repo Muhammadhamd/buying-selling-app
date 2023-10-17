@@ -11,6 +11,7 @@ const __dirname = path.resolve();
 const SECRET = process.env.SECRET || 'topsecret';
 const db = client.db('userdatabase')
 const col = db.collection("User")
+const admincol = db.collection("admin")
 // Define the user schema and model
 import multer from 'multer';
  
@@ -34,30 +35,30 @@ router.post('/userregister',upload.single('ProfileImage'), async (req, res) => {
 
 
        const addImgDB = req?.file
-       console.log(addImgDB.mimetype)
        let imgUrl = ''
-   if (addImgDB) {
-    const name = +new Date() + "-" + addImgDB.originalname;
-    const metadata = {
-     contentType: addImgDB.mimetype
-    };
-    const storageRef = ref(getStorage(app), name)
-    
-    const task = uploadBytes(storageRef, addImgDB.buffer, metadata);
-    
-    
-    const snapshot = await task
-    
-    imgUrl =await getDownloadURL(snapshot.ref)
- console.log(imgUrl)
-          
-   }
+   
           
 
     const user = await col.findOne({ email });
     if (user) {
       return res.status(400).send('User already exists. Please use a different email.');
     } else {
+      if (addImgDB) {
+        const name = +new Date() + "-" + addImgDB.originalname;
+        const metadata = {
+         contentType: addImgDB.mimetype
+        };
+        const storageRef = ref(getStorage(app), name)
+        
+        const task = uploadBytes(storageRef, addImgDB.buffer, metadata);
+        
+        
+        const snapshot = await task
+        
+        imgUrl =await getDownloadURL(snapshot.ref)
+              
+       }
+
       const hashedPassword = await bcrypt.hash(password, 10);
       const data = await col.insertOne({
         name,
@@ -65,7 +66,6 @@ router.post('/userregister',upload.single('ProfileImage'), async (req, res) => {
         password: hashedPassword,
         profileImage:imgUrl
       });
-   console.log("fgaegf",data)
       const token = jwt.sign({
         _id: data._id,
         email: data.email,
@@ -127,9 +127,74 @@ router.post('/userlogin', async (req, res) => {
     res.status(500).send('Login failed, please try later.');
   }
 });
+router.post('/adminlogin', async (req, res) => {
+  const { email, password } = req.body;
 
+  try {
+    const data = await admincol.findOne({ email });
+
+    if (!data) {
+      return res.status(401).send('Incorrect email or password.');
+    }
+    console.log(data)
+
+    const isMatch = await bcrypt.compare(password, data.password);
+
+    if (isMatch) {
+      const token = jwt.sign({
+        _id: data._id,
+        email: data.email,
+        iat: Date.now() / 1000 - 30,
+        exp: Date.now() / 1000 + (60 * 60 * 24),
+      }, SECRET);
+
+      res.cookie('AdminToken', token, {
+        maxAge: 86_400_000,
+        httpOnly: true,
+      });
+
+      res.send("login sucessfully")
+
+    } else {
+      return res.status(401).send('Incorrect password.');
+    }
+  } catch (err) {
+    console.error('DB error:', err);
+    res.status(500).send('Login failed, please try later.');
+  }
+
+  // try {
+  //   const user = await admincol.findOne({ email });
+  //   if (user) {
+  //     return res.status(400).send('User already exists. Please use a different email.');
+  //   } else {
+  //     const hashedPassword = await bcrypt.hash(password, 10);
+  //     const data = await admincol.insertOne({
+  //       email,
+  //       password: hashedPassword,
+  //     });
+  //  console.log("fgaegf",data)
+  //     const token = jwt.sign({
+  //       _id: data._id,
+  //       email: data.email,
+  //       iat: Date.now() / 1000 - 30,
+  //       exp: Date.now() / 1000 + (60 * 60 * 24),
+  //     }, SECRET);
+
+  //     res.cookie('AdminToken', token, {
+  //       maxAge: 86_400_000,
+  //       httpOnly: true,
+  //     });
+
+  //     res.send("login sucessfully")
+  //   }
+  // } catch (error) {
+  //   console.error('Error during user registration:', error);
+  //   res.status(500).json({ error: 'Failed to register user.' });
+  // }
+});
 // User logout route
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   res.cookie('Token', '', {
     maxAge: 1,
     httpOnly: true,

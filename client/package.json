@@ -13,6 +13,7 @@
     "instafeed.js": "^2.0.0",
     "mongodb": "^5.8.1",
     "mongoose": "^7.4.5",
+    "owl.carousel": "^2.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",

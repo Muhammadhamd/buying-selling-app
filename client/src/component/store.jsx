@@ -160,6 +160,7 @@ useEffect(()=>{
                   isSale={product.salesDiscount}
                   ratings={product.rating} // Map the ratings array correctly
                   tag={product.tag}
+                  productImg={product.img}
                 />
               )))
           

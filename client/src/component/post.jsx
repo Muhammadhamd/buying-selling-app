@@ -8,7 +8,9 @@ import Errormsg from './errorcomponent';
 import ProductPost from './LatestPost';
 import SubmitBtn from './submitbtn';
 import Navcomponent from './navbar';
+import PopUpMsg from './popupmsg';
 function PostPage () {
+  const [servermsg , setServerMsg] = useState(null)
   const [reviewOrDescription , setreviewOrDescription] =useState("description")
     const [data , setdata] = useState([])
     const [userdata , setuserdata] = useState([])
@@ -35,10 +37,10 @@ const  postId  = useParams().productid
               withCredentials: true,
             })
             setislogin(true)
-            console.log(res)
+            
             setuserdata(res.data)
           } catch (error) {
-            console.log(error)
+            
             setislogin(false)
           }
         }
@@ -59,10 +61,13 @@ const addToCartHandler = (id)=>{
     withCredentials: true,
   })
   .then((res)=>{
-    console.log(res)
-
+    
+    setServerMsg(res)
   })
-  .catch((e)=>console.log(e))
+  .catch((e)=>{console.log(e)
+    setServerMsg(e)
+  
+  })
 }
 
 const addReviewHandle = async (e)=>{
@@ -76,10 +81,10 @@ const addReviewHandle = async (e)=>{
         withCredentials: true,
       
     })
-    console.log(res)
+    
     setRerenderComponent(true)
    } catch (error) {
-    console.log(error)
+    
    }
 
 }
@@ -93,8 +98,8 @@ const HandleRatingSubmit = async(e) =>{
   }
 
   useEffect(()=>{
-    console.log('rate is here' , reviewRateIs)
-  },[reviewRateIs])
+    console.log('rerender')
+  },[reviewRateIs , servermsg])
   
 
 useEffect(()=>{
@@ -106,11 +111,11 @@ useEffect(()=>{
            
   .then((res)=>{
       setdata(res.data)
-      console.log(res.data.rating)
-
+      document.title = res.data.title
+      
       setTimeout(() => {
         
-      },2000);
+      },1000);
 })
   .catch((e)=>{console.log(e)
 
@@ -252,16 +257,31 @@ useEffect(()=>{
    :
   ( <div className='flex flex-col items-center bg-[#f5f7f9]'>
     
-    <div className='flex w-full justify-center mt-[100px]'>
-    <div className='max-w-[700px] w-full'>
-      <img className='w-full' src={data.image || oproductimg} alt="" />
+    <div className='flex w-full max-[900px]:flex-col max-[900px]:m-[15px] justify-center mt-[100px]'>
+    <div className='min-[900px]:ml-[25px]   min-[900px]:max-w-[600px] min-[900px]:w-full w-90 m-[10px]'>
+      <img className='w-full' src={data.img || oproductimg} alt="" />
     </div>
-    <div className='text-[19px] md:ml-[50px] pt-[15px]'>
-      <h3 className='text-[#777]  mb-[.8em]'>Home/women/{data.title}</h3>
+    <div className='min-[900px]:text-[18px] text-[16px] min-[900px]:ml-[50px] m-[10px] pt-[15px]'>
+      <h3 className='text-[#777]  min-[900px]:mb-[.8em] mb-[12px]'>Home/women/{data.title}</h3>
       <h2 className='mb-[.8em]'>{data.tag}</h2>
-      <h1 className='text-4xl'>{"Basic Gray Jeans"||data.title}</h1>
-      <h1 className='text-3xl text-slate-700 font-semibold my-[.6em]'>${data.price}</h1>
-      <p className='max-w-[600px] text-[18px] leading-[1.8rem] text-[#766] w-full'>{"Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit sed ." || data.description}</p>
+      <h1 className='min-[900px]:text-4xl text-3xl'>{data.title ||"Basic Gray Jeans"}</h1>
+      {data.salesDiscount ? (
+  <div className='flex items-center my-[10px] min-[900px]:my-[.6em]'>
+    <h1 className='min-[900px]:text-3xl text-2xl  text-slate-700 font-semibold line-through'>
+      ${data.price}
+    </h1>
+    -
+    <h1 className='min-[900px]:text-3xl text-2xl text-slate-700 font-semibold'>
+      {Math.floor(data.price - (data.salesDiscount * data.price / 100))}
+    </h1>
+  </div>
+) : (
+  <h1 className='min-[900px]:text-3xl text-2xl text-slate-700 font-semibold min-[900px]:my-[.6em] my-[10px]'>
+    ${data.price}
+  </h1>
+)}
+      
+      <p className='max-w-[600px] min-[900px]:text-[18px] min-[700px]:text-[17px] text-[15px] leading-[1.8rem] text-[#766] w-full'>{"Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit sed ." || data.description}</p>
     
     
      <div className="flex  gap-[6px] my-[25px] text-xl" >
@@ -273,8 +293,8 @@ useEffect(()=>{
       e.preventDefault()
       addToCartHandler(data._id)}} className='flex gap-[15px] mt-[20px] items-center'>
      <input 
-     className='w-[50px] h-[50px] outline-none text-slate-700 pl- ' 
-     ref={itemNumberRef} 
+     className='w-[50px] h-[50px] text-center outline-none text-slate-700 pl- ' 
+     ref={itemNumberRef}
      defaultValue={1} 
      type="number" 
      onChange={()=>{
@@ -289,8 +309,8 @@ useEffect(()=>{
   </div>
   <div class="p-[3%] w-full  my-[5%]">
                 <div class=" p-4">
-                  <ul id="tabs-nav">
-                    <li>
+                  <ul id=" tabs-nav" className='flex gap-[20px]'>
+                    <li class={`${reviewOrDescription === 'reviews' ? '' : 'border-b font-bold'}`}>
                       <a class=" uppercase text-base" href="#tab1"
                       onClick={(e)=>{
                         setreviewOrDescription("description")
@@ -298,7 +318,7 @@ useEffect(()=>{
                         Description
                       </a>
                     </li>
-                    <li class="pl-2">
+                    <li class={`${reviewOrDescription === 'reviews' ? 'border-b font-bold' : ''}`}>
                       <a class=" uppercase text-base" href="#tab2"
                        onClick={(e)=>{
                         setreviewOrDescription("reviews")
@@ -392,7 +412,7 @@ useEffect(()=>{
         {
           isRelatedPostLoading?(<LoadingComponent isLoading={isLoading?false:isRelatedPostLoading} />)
           :(slicedRelatedPosts.map((eachPost)=>[
-           <ProductPost productid={eachPost._id} title={eachPost.title} price={eachPost.price} isSale={eachPost.salesDiscount} tag={eachPost.tag} ratings={eachPost.rat}/>
+           <ProductPost productid={eachPost._id} title={eachPost.title} price={eachPost.price} isSale={eachPost.salesDiscount} productImg={eachPost.img} tag={eachPost.tag} ratings={eachPost.rat}/>
           ]))
             
         }
@@ -404,6 +424,8 @@ useEffect(()=>{
     
     
     }
+<PopUpMsg  status={servermsg?.request?.status} message={servermsg?.data} />
+
   </>
   );
 }

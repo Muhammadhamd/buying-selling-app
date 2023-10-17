@@ -24,49 +24,20 @@ app.use(cors({
 
 
 app.use(apiv1)
-
-
-
-app.use((req, res, next) => {
-
-    console.log("req.cookies: ", req.cookies.Token);
-
-    if (!req?.cookies?.Token) {
-        res.status(401).send({
-            message: "include http-only credentials with every request"
-        })
-        return;
+function authenticateUser(req, res, next) {
+    const token = req.cookies.Token; // Assuming you store the token in a cookie
+    if (token) {
+      // Verify and decode the token here (use your actual logic)
+      // For example, you can use the 'jsonwebtoken' library
+      const decodedData = jwt.verify(token, SECRET);
+  
+      if (decodedData) {
+        // If the token is valid, set the user data in the request object
+        req.body.decodedData = decodedData;
+      }
     }
-
-    jwt.verify(req.cookies.Token, SECRET, function (err, decodedData) {
-        if (!err) {
-
-            console.log("decodedData: ", decodedData);
-
-            const nowDate = new Date().getTime() / 1000;
-
-            if (decodedData.exp < nowDate) {
-
-                res.status(401);
-                res.cookie('Token', '', {
-                    maxAge: 1,
-                    httpOnly: true
-                });
-                res.send({ message: "token expired" })
-
-            } else {
-
-                console.log("token approved");
-
-                req.body.decodedData = decodedData
-                console.log(decodedData)
-                next();
-            }
-        } else {
-            res.status(401).send("invalid token")
-        }
-    });
-})
+    next();
+  }
 app.use(cartRoutes)
 app.use(ratingroutes)
 app.use(userinfoRoutes)
@@ -74,6 +45,11 @@ app.use(userinfoRoutes)
 app.use(express.static(path.join(__dirname, 'client/build')))
 app.get(express.static(path.join(__dirname, 'client/build')))
 app.use("*", express.static(path.join(__dirname, 'client/build')))
+
+
+
+
+
 
 const PORT = process.env.PORT || 2344
 app.listen(PORT,()=>{

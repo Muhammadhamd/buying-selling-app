@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import Navcomponent from "./navbar";
 import axios from "axios";
 import imgprd from "../img/productjeans1.jpg";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 
 function Profile() {
+  const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState(false);
   const dataarray = [25, 626, 62, 6, 74, 673, 6, 37, 45, 74];
   const [data, setData] = useState([]);
@@ -23,29 +24,24 @@ function Profile() {
         withCredentials: true,
       })
       setIsLogin(true)
-      console.log(res)
       setData(res.data)
     } catch (error) {
-      console.log(error)
       setIsLogin(false)
+      navigate('/login')
     }
   }
 
   const SelectedHandler = (selected) => {
-    console.log(selected);
     setSelectedData(selected);
   };
 
   useEffect(() => {
     userLoginCheckHandler();
-    console.log(data)
 
   }, [isLogin]);
   useEffect(()=>{
-    console.log(addressData)
   },[addressData])
   useEffect(()=>{
-    console.log(messageData)
   },[messageData])
   return (
     <div>

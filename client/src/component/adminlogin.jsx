@@ -1,23 +1,45 @@
 import react , {useEffect, useState} from "react"
 import axios from 'axios';
-import UseToken from './token.jsx'
+import {useNavigate} from "react-router-dom"
+// import UseToken from './token.jsx'
 import SubmitBtn from "./submitbtn.js";
 
 
 function Adminlogin (){
-
+  const navigate = useNavigate()
     const [ email , setEmail] = useState("")
-    const  token   = UseToken()
+    const [islogin , setislogin] = useState(false)
     const [ password , setpassword] = useState("")
     const [ checkToken , setcheckToken] = useState("")
     const [ serverMessege , setServerMessege] = useState("")
     const [isPosting , setisPosting] = useState(false)
-    console.log(token)
+    const usercheckHandler = async() =>{
+      try {
+       const res =  await  axios.get("/Admincheck",{
+        withCredentials: true,
+       })
+      .then((res)=>{
+        console.log(res)
+        setislogin(true)
+        navigate('/dashboard')
+      })
+  
+      .catch((e)=>{
+        console.log(e)
+      })
+      console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    useEffect(()=>{
+      usercheckHandler()
+    },[islogin])
     const login = async(e)=>{
       e.preventDefault()
       setisPosting(true)
 
-     await axios.post("/login",{
+     await axios.post("/Adminlogin",{
         email:email,
         password:password
       },{
@@ -26,7 +48,10 @@ function Adminlogin (){
       .then((res)=>{
           //  localStorage.setItem("Token", res.data)
     setisPosting(false)
+
        setServerMessege("you are login now")
+       navigate('/dashboard')
+
       })
       .catch((e)=>{
     setisPosting(false)
@@ -58,16 +83,7 @@ function Adminlogin (){
      
         <div className="flex w-full flex-col items-center">
          
-           { token ?
-            (
-           <>  
-           <div>
-           <form onSubmit={logoutFunction}>
-            <input type="submit" value='Logout' />
-           </form>
-          </div>
-          </>
-              ):(  
+           
                 <>
                 <form onSubmit={login} className='my-10 shadow-[0px_0px_5px_#00000042] rounded-md px-[50px] py-[20px] w-full max-w-[700px]'
               
@@ -98,8 +114,8 @@ function Adminlogin (){
               <div className="text-center text-red font-semibold" >
                 {serverMessege}
               </div></>
-                  ) 
-             }
+                  
+             
         </div>
     )
 }

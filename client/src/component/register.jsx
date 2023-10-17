@@ -2,13 +2,35 @@ import react, { useEffect, useRef, useState } from 'react'
 import Navcomponent from './navbar'
 import defaultImg from "../img/imgholder.jpg"
 import axios from 'axios'
+import {useNavigate } from "react-router-dom"
 function UserRegister(){
-
+    const navigate = useNavigate()
     const [image , setdpimage] = useState(defaultImg)
+    const [isuser , setIsUser] = useState(null)
     const passwordref = useRef(null)
     const emailref = useRef(null)
     const nameref = useRef(null)
     const [img , setImg] = useState()
+    const usercheckHandler = async() =>{
+      try {
+       const res =  await  axios.get("/currentuser",{
+        withCredentials: true,
+       })
+      .then((res)=>{
+        console.log(res)
+        setIsUser(res.data)
+        console.log(setIsUser)
+         navigate('/profile')
+      })
+  
+      .catch((e)=>{
+        console.log(e)
+      })
+      console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
     const submitHandler = async(e)=>{
         e.preventDefault();
 console.log('eee')
@@ -29,6 +51,7 @@ console.log('eee')
           )
           .then((res)=>{
             console.log(res)
+            navigate("/")
           })
           .catch((e)=>{
             console.log(e)
@@ -44,6 +67,7 @@ console.log('eee')
       useEffect(()=>{
         console.log(img)
       },[img])
+      useEffect(()=>{usercheckHandler()},[isuser])
     return(
         <>
         <Navcomponent changeCss={true}/>

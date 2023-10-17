@@ -44,6 +44,8 @@ const [isUser , setIsUser] = useState([])
           )
           .then((res)=>{
             console.log(res)
+            history("/")
+
           })
           .catch((e)=>{
             console.log(e)
