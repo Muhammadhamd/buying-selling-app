@@ -1,0 +1,38 @@
+.service-div{
+  background-image: url('./img/image 1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  z-index: 10;
+  position: relative;
+}
+@media screen and (max-width:500px) {
+  .service-div{
+    background-position:bottom ;
+  }
+  .service-div2{
+    background-position-x:-265px;
+  }
+}
+
+.overlay1{
+  background: linear-gradient(180deg,#0084D6 -50%,#000000 100%);
+  opacity: .5;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+.service-div2{
+  margin: 5% 10px ;
+  background-image: url('./img/New\ Project.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  /* border: 6px solid #BC7AFF; */
+  padding: 7% 0;
+  
+}
