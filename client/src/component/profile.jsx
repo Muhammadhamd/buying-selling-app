@@ -20,7 +20,7 @@ function Profile() {
   const userLoginCheckHandler = async() =>{
 
     try {
-      const res = await axios.get("/currentuser",{
+      const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
         withCredentials: true,
       })
       setIsLogin(true)

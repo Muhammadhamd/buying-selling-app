@@ -8,7 +8,7 @@ function UseToken(){
   useEffect(() => {
     // Fetch the token when the component mounts
       axios
-      .get("/token",{
+      .get("https://tame-teal-sockeye-fez.cyclic.app/token",{
         withCredentials: true,
       })
       .then((res) => {

@@ -20,7 +20,7 @@ function Dashboard() {
     const [ProductsArray , setProductsArray] = useState([])
     const AdmincheckingHandler = async() =>{
         try {
-         const res =  await  axios.get("/Admincheck",{
+         const res =  await  axios.get("https://tame-teal-sockeye-fez.cyclic.app/Admincheck",{
           withCredentials: true,
          })
         .then((res)=>{
@@ -42,7 +42,7 @@ function Dashboard() {
       }
     const deleteProductHandler = async(id)=>{
       try {
-        const res = await axios.delete(`/delete-product/${id}`)
+        const res = await axios.delete(`https://tame-teal-sockeye-fez.cyclic.app/delete-product/${id}`)
         console.log(res.data)
         setrerenderOnPost(true)
       } catch (error) {
@@ -68,7 +68,7 @@ function Dashboard() {
         formdata.append('tag',tag)
         formdata.append('salesDecsount',salesDecsount)
         formdata.append('image',img)
-        axios.post("/post", formdata , {
+        axios.post("https://tame-teal-sockeye-fez.cyclic.app/post", formdata , {
             withCredentials: true, 
         })
           .then((res)=>{
@@ -83,7 +83,7 @@ function Dashboard() {
     const productsHandler = async()=>{
 
       try {
-        const res = await axios.get('/posts')
+        const res = await axios.get('https://tame-teal-sockeye-fez.cyclic.app/posts')
         console.log(res.data)
         setProductItem((productItems) => [...productItems , res.data])
        setrerender(true)

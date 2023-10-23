@@ -27,7 +27,7 @@ const SearchHandler = (e) => {
 
   const encodedSearchInput = encodeURIComponent(searchInput);
   navigate(`/store/Men?s=${encodedSearchInput}`);
-  axios.get(`/posts/men?s=${searchInput}`)
+  axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts/men?s=${searchInput}`)
     .then((res) => {
       setProducts(res.data);
       
@@ -48,7 +48,7 @@ const SearchHandler = (e) => {
 const userLoginCheckHandler = async() =>{
 
   try {
-    const res = await axios.get("/currentuser",{
+    const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
       withCredentials: true,
     })
     setislogin(true)
@@ -68,7 +68,7 @@ useEffect(()=>{
   setSearchInput(searchQuery || '')
   
   setisloading(true)
-axios.get(`/posts/men?s=${searchQuery || ""}`)
+axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts/men?s=${searchQuery || ""}`)
 .then((res)=>{
   
   setProducts(res.data)

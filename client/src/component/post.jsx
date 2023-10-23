@@ -33,7 +33,7 @@ const  postId  = useParams().productid
         const userLoginCheckHandler = async() =>{
 
           try {
-            const res = await axios.get("/currentuser",{
+            const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
               withCredentials: true,
             })
             setislogin(true)
@@ -55,7 +55,7 @@ const addToCartHandler = (id)=>{
   
   }
 
-  axios.post("/addtocart",{
+  axios.post("https://tame-teal-sockeye-fez.cyclic.app/addtocart",{
     isdata:newCartProduct
   },{
     withCredentials: true,
@@ -73,7 +73,7 @@ const addToCartHandler = (id)=>{
 const addReviewHandle = async (e)=>{
   e.preventDefault()
   try {
-    const res= await axios.post(`/post-rating/${postId}`,{
+    const res= await axios.post(`https://tame-teal-sockeye-fez.cyclic.app/post-rating/${postId}`,{
       rating:reviewRateIs,
       message: reviewMessage.current.value
     },{
@@ -105,7 +105,7 @@ const HandleRatingSubmit = async(e) =>{
 useEffect(()=>{
   setIsLoading(true)
 
-  axios.get(`/post/${postId}`,{
+  axios.get(`https://tame-teal-sockeye-fez.cyclic.app/post/${postId}`,{
     withCredentials: true,
   })
            
@@ -134,7 +134,7 @@ useEffect(()=>{
 
 useEffect(()=>{
   setInterval(() => {
-    axios.get(`/posts`)
+    axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts`)
            
   .then((res)=>{
 

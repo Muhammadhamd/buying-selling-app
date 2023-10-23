@@ -25,7 +25,7 @@ function Home() {
 const userlogincheckhnadler = async() =>{
 
   try {
-    const res = await axios.get("/currentuser",{
+    const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
       withCredentials: true,
     })
       setIslogin(true)
@@ -39,7 +39,7 @@ const userlogincheckhnadler = async() =>{
 }
 const productsHandler = async () => {
   try {
-    const res = await axios.get("/posts");
+    const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/posts");
     console.log(res);
     const data = res.data;
     const updatedProducts = [];

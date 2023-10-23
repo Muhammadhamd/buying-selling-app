@@ -15,7 +15,7 @@ function Adminlogin (){
     const [isPosting , setisPosting] = useState(false)
     const usercheckHandler = async() =>{
       try {
-       const res =  await  axios.get("/Admincheck",{
+       const res =  await  axios.get("https://tame-teal-sockeye-fez.cyclic.app/Admincheck",{
         withCredentials: true,
        })
       .then((res)=>{
@@ -39,7 +39,7 @@ function Adminlogin (){
       e.preventDefault()
       setisPosting(true)
 
-     await axios.post("/Adminlogin",{
+     await axios.post("https://tame-teal-sockeye-fez.cyclic.app/Adminlogin",{
         email:email,
         password:password
       },{
@@ -63,7 +63,7 @@ function Adminlogin (){
     }
    const logoutFunction =async(e)=>{
     e.preventDefault()
-      await axios.get("/logout",{
+      await axios.get("https://tame-teal-sockeye-fez.cyclic.app/logout",{
         withCredentials: true,
      })
     .then((res)=>{console.log(res.data)

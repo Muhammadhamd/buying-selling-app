@@ -27,7 +27,7 @@ const SearchHandler = (e) => {
 
   const encodedSearchInput = encodeURIComponent(searchInput);
   navigate(`/store/Children?s=${encodedSearchInput}`);
-  axios.get(`/posts/children?s=${searchInput}`)
+  axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts/children?s=${searchInput}`)
     .then((res) => {
       setProducts(res.data);
       console.log(res.data)
@@ -48,7 +48,7 @@ const SearchHandler = (e) => {
 const userLoginCheckHandler = async() =>{
 
   try {
-    const res = await axios.get("/currentuser",{
+    const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
       withCredentials: true,
     })
     setislogin(true)
@@ -68,7 +68,7 @@ useEffect(()=>{
   setSearchInput(searchQuery || '')
   
   setisloading(true)
-axios.get(`/posts/children?s=${searchQuery || ""}`)
+axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts/children?s=${searchQuery || ""}`)
 .then((res)=>{
   console.log(res.data)
   setProducts(res.data)
@@ -89,7 +89,7 @@ useEffect(()=>{
 
 useEffect(()=>{
   const mentags = products.filter((product)=>product.tag === 'Men').map((product)=>product.tag)
-  const womentags = products.filter((product)=>product.tag === 'Women').map((product)=>product.tag)
+  const womentags = products.filter((product)=>product.tag === 'women').map((product)=>product.tag)
   const childrentags = products.filter((product)=>product.tag === 'children').map((product)=>product.tag)
 
 
