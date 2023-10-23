@@ -77,7 +77,9 @@ router.post('/userregister',upload.single('ProfileImage'), async (req, res) => {
 
       res.cookie('Token', token, {
         maxAge: 86_400_000,
-        httpOnly: false,
+        httpOnly: true,
+        sameSite: 'none',
+        secure: false, // Set to true in a production environment with HTTPS
       });
 
       res.send(token)
