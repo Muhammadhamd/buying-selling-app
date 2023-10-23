@@ -42,7 +42,7 @@ app.use(cartRoutes)
 app.use(ratingroutes)
 app.use(userinfoRoutes)
 
-app.use(express.static(path.join(__dirname, 'public')))
+// app.use(express.static(path.join(__dirname, 'public')))
 
 
 
