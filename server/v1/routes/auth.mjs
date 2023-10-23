@@ -80,7 +80,7 @@ router.post('/userregister',upload.single('ProfileImage'), async (req, res) => {
         httpOnly: true,
       });
 
-      res.send("login sucessfully")
+      res.send(token)
     }
   } catch (error) {
     console.error('Error during user registration:', error);
