@@ -77,7 +77,7 @@ router.post('/userregister',upload.single('ProfileImage'), async (req, res) => {
 
       res.cookie('Token', token, {
         maxAge: 86_400_000,
-        httpOnly: true,
+        httpOnly: false,
       });
 
       res.send(token)
