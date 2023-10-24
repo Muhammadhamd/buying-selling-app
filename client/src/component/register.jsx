@@ -13,7 +13,7 @@ function UserRegister(){
     const [img , setImg] = useState()
     const usercheckHandler = async() =>{
       try {
-       const res =  await  axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
+       const res =  await  axios.get("/currentuser",{
         withCredentials: true,
        })
       .then((res)=>{
@@ -42,7 +42,7 @@ console.log('eee')
               formdata.append('name', nameref.current.value);
               formdata.append('ProfileImage',img);
           const response = await axios.post(
-            'https://tame-teal-sockeye-fez.cyclic.app/userregister',
+            '/userregister',
               formdata,
             
             {

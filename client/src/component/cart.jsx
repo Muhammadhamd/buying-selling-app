@@ -23,7 +23,7 @@ const CartComponent = () => {
   const userLoginCheckHandler = async() =>{
 
     try {
-      const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
+      const res = await axios.get("/currentuser",{
         withCredentials: true,
       })
       setislogin(true)
@@ -37,7 +37,7 @@ const CartComponent = () => {
  const setorderHandler = async() =>{
 
   try {
-    const res = await axios.get("https://tame-teal-sockeye-fez.cyclic.app/Order",{
+    const res = await axios.get("/Order",{
       User_Cnic: cnic,
       User_cartNumber: cartNumber,
       Products:cartItems,
@@ -54,7 +54,7 @@ const OrderCartHndler = () =>{
   setOrderFormRender(true)
 }
 const RenderCartsHandler = async() =>{
-  axios.get("https://tame-teal-sockeye-fez.cyclic.app/getcartdata"
+  axios.get("/getcartdata"
   ,
   {
     withCredentials: true,
@@ -76,7 +76,7 @@ const removeFromCart = async(itemId) => {
 
   try {
     console.log("clciked", itemId)
-    const res = await axios.delete(`https://tame-teal-sockeye-fez.cyclic.app/remove-from-cart/${itemId}`
+    const res = await axios.delete(`/remove-from-cart/${itemId}`
     ,
   {
     withCredentials: true,

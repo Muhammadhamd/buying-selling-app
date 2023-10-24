@@ -7,7 +7,7 @@ function UserLogin(){
 const [isUser , setIsUser] = useState([])
   const usercheckHandler = async() =>{
     try {
-     const res =  await  axios.get("https://tame-teal-sockeye-fez.cyclic.app/currentuser",{
+     const res =  await  axios.get("/currentuser",{
       withCredentials: true,
      })
     .then((res)=>{
@@ -33,7 +33,7 @@ const [isUser , setIsUser] = useState([])
         console.log('eee')
         try {
           const response = await axios.post(
-            'https://tame-teal-sockeye-fez.cyclic.app/userlogin',
+            '/userlogin',
             {
               email: emailref.current.value,
               password: passwordref.current.value,

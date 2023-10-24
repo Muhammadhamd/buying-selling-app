@@ -1,16 +1,11 @@
 import express from "express"
-import authRouter from "./routes/auth.mjs"
-import userdata from "./routes/userinfo.mjs"
-import profileRouter from "./routes/profile.mjs"
 import postRouter from "./routes/post.mjs"
-// import cartRouter from "./routes/cart.mjs"
+import authRouter from "./routes/auth.mjs"
+import profileRouter from "./routes/profile.mjs"
+
 const router = express.Router()
 
-
-// router.use(cartRouter)
-router.use(authRouter)
-router.use(profileRouter)
 router.use(postRouter)
-// router.use(profileRouter)
-
+router.use(profileRouter)
+router.use(authRouter)
 export default router

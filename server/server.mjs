@@ -41,8 +41,9 @@ function authenticateUser(req, res, next) {
 app.use(cartRoutes)
 app.use(ratingroutes)
 app.use(userinfoRoutes)
-
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../client/build')))
+app.get(express.static(path.join(__dirname, '../client/build')))
+app.use("*", express.static(path.join(__dirname, '../client/build')))
 
 
 

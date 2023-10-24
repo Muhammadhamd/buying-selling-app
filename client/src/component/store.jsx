@@ -27,7 +27,7 @@ const SearchHandler = (e) => {
 
   const encodedSearchInput = encodeURIComponent(searchInput);
   navigate(`/store?s=${encodedSearchInput}`);
-  axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts?s=${searchInput}`)
+  axios.get(`/posts?s=${searchInput}`)
     .then((res) => {
       setProducts(res.data);
       console.log(res.data)
@@ -68,7 +68,7 @@ useEffect(()=>{
   setSearchInput(searchQuery || '')
   
   setisloading(true)
-axios.get(`https://tame-teal-sockeye-fez.cyclic.app/posts?s=${searchQuery || ""}`)
+axios.get(`/posts?s=${searchQuery || ""}`)
 .then((res)=>{
   console.log(res.data)
   setProducts(res.data)

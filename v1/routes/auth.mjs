@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {  getStorage, ref, uploadBytes , getDownloadURL  } from "firebase/storage";
-import {client} from "../../mongodb.mjs"
-import app from '../../firebaseconfig.mjs'
+import {client} from "../../server/mongodb.mjs"
+import app from '../../../firebaseconfig.mjs'
 const router = express.Router();
 const __dirname = path.resolve();
 const SECRET = process.env.SECRET || 'topsecret';
@@ -78,9 +78,11 @@ router.post('/userregister',upload.single('ProfileImage'), async (req, res) => {
       res.cookie('Token', token, {
         maxAge: 86_400_000,
         httpOnly: true,
+        sameSite: 'none',
+        secure: false, // Set to true in a production environment with HTTPS
       });
 
-      res.send("login sucessfully", token)
+      res.send(token)
     }
   } catch (error) {
     console.error('Error during user registration:', error);
