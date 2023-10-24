@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 import path from "path"
 import { ObjectId ,  } from "mongodb"
 import {  getStorage, ref, uploadBytes , getDownloadURL  } from "firebase/storage";
-import app from '../../../firebaseconfig.mjs'
+import app from '../../firebaseconfig.mjs'
 const __dirname = path.resolve()
 const router = express.Router()
 import {client} from "./../../mongodb.mjs"

@@ -2,7 +2,7 @@ import express from 'express'
 import jwt from "jsonwebtoken"
 import  mongoose, { connect }  from 'mongoose'
 const router = express.Router()
-import {client} from "../../server/mongodb.mjs"
+import {client} from "./../../mongodb.mjs"
 const SECRET = process.env.SECRET || "topsecret";
 
 const db = client.db("userdatabase"),

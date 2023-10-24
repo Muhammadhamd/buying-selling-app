@@ -22,7 +22,6 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(express.static(path.join(__dirname, '../client/build')))
 
 app.use(apiv1)
 function authenticateUser(req, res, next) {
@@ -42,8 +41,10 @@ function authenticateUser(req, res, next) {
 app.use(cartRoutes)
 app.use(ratingroutes)
 app.use(userinfoRoutes)
+app.use(express.static(path.join(__dirname, 'client/build')))
+
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
   });
 
 
