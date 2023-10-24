@@ -56,8 +56,8 @@ function Navcomponent({islogin , img  ,changeCss}) {
         </div>
         <div className='leftul'>
 <ul className='flex items-center gap-[30px]  text-[17px]'>
-<li className=''><Link to='/About' className='hover:text-violet-500'>ABOUR</Link></li>
-<li className=''><Link to='/contact' className='hover:text-violet-500'>CONTACT</Link></li>
+<li className=''><Link to='/About' className='hover:text-violet-500'>ABOUT</Link></li>
+<li className=''><Link to='/Contact' className='hover:text-violet-500'>CONTACT</Link></li>
 { islogin ?
   (<>
   <li className='text-[20px]'><Link to='/cart' className='hover:text-violet-500'><i className='fa fa-cart-plus'></i></Link></li>
@@ -96,8 +96,8 @@ function Navcomponent({islogin , img  ,changeCss}) {
         <li className='max-[600px]:block hidden'><Link to='/Store/Women'>WOMEN</Link></li>
                 <li className='max-[650px]:block hidden'><Link to='/Store/Men' >MEN</Link></li>
                 <li className='max-[700px]:block hidden'><Link to='/Store/Children'>CHILDREN</Link></li>
-<li className=''><Link>ABOUR</Link></li>
-<li className=''><Link>CONTACT</Link></li>
+<li className=''><Link to="/About">ABOUT</Link></li>
+<li className=''><Link to='/Contact'>CONTACT</Link></li>
 { islogin ?
   (<>
   <li className='text-[20px]'><Link to='/cart'><i className='fa fa-cart-plus'></i></Link></li>

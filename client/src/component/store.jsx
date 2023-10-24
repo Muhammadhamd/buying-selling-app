@@ -48,7 +48,7 @@ const SearchHandler = (e) => {
 const userLoginCheckHandler = async() =>{
 
   try {
-    const res = await axios.get("https://buying-selling-app.vercel.app/currentuser",{
+    const res = await axios.get("/currentuser",{
       withCredentials: true,
     })
     setislogin(true)

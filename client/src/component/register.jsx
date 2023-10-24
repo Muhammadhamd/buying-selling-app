@@ -6,6 +6,7 @@ import {useNavigate } from "react-router-dom"
 function UserRegister(){
     const navigate = useNavigate()
     const [image , setdpimage] = useState(defaultImg)
+    const [serverMessage, setServerMessage] =useState()
     const [isuser , setIsUser] = useState(null)
     const passwordref = useRef(null)
     const emailref = useRef(null)
@@ -52,9 +53,12 @@ console.log('eee')
           .then((res)=>{
             console.log(res)
             navigate("/")
+            setServerMessage(res.data)
           })
           .catch((e)=>{
             console.log(e)
+            setServerMessage(e.response.data)
+
           })
     
           // Handle response as needed
@@ -88,22 +92,23 @@ console.log('eee')
                     
                      />
                 </div>
-                <input type="text"  className='px-4 py-3 rounded border w-full my-[7px] '
+                <input type="text"  className='px-4 py-3 rounded border w-full my-[7px] ' placeholder='your name'
                 
                 ref={nameref}
                 
                 />
-                <input type="email"  className='px-4 py-3 rounded border w-full my-[7px] '
+                <input type="email"  className='px-4 py-3 rounded border w-full my-[7px] ' placeholder='New Email'
                
                 ref={emailref}
                 
                 />
-                <input type="password"  className='px-4 py-3 rounded border w-full my-[7px] '
+                <input type="password"  className='px-4 py-3 rounded border w-full my-[7px] ' placeholder='New Password'
                 ref={passwordref}
                 />
                 <input type="submit" value="login" className='bg-violet-500 rounded shadow px-5 py-3 text-white font-semibold' />
 
             </form>
+            <div>{serverMessage}</div>
         </div>
         </>
     )

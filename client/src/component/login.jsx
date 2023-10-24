@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate  } from 'react-router-dom';
 function UserLogin(){
   const history = useNavigate()
+  const [serverMessege , setServerMessege]= useState()
 const [isUser , setIsUser] = useState([])
   const usercheckHandler = async() =>{
     try {
@@ -44,11 +45,14 @@ const [isUser , setIsUser] = useState([])
           )
           .then((res)=>{
             console.log(res)
+            setServerMessege(res.data)
             history("/")
 
           })
           .catch((e)=>{
             console.log(e)
+            setServerMessege(e.response.data)
+
           })
     
           // Handle response as needed
@@ -71,15 +75,16 @@ const [isUser , setIsUser] = useState([])
         (<div className='flex flex-col items-center '>
             <h1 className='font-bold text-6xl my-[20px]'>Login</h1>
             <form onSubmit={submitHandler} className='max-w-[600px] w-full  shadow p-[20px]'>
-                <input type="email" className='px-4 py-3 rounded border w-full my-[7px] '
+                <input type="email" className='px-4 py-3 rounded border w-full my-[7px] ' placeholder='Your email'
                 ref={emailref}
                 
                 />
-                <input type="password" className='px-4 py-3 rounded border w-full my-[7px]'
+                <input type="password" className='px-4 py-3 rounded border w-full my-[7px]' placeholder='Your password'
                 ref={passwordref}
                 />
                 <input type="submit" value="login" className='bg-violet-500 rounded shadow px-5 py-3 text-white font-semibold' />
             </form>
+            <div>{serverMessege}</div>
         </div>):null
 }
         </>
